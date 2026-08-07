@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n-title="title">yasweep.js — Kaynak Kodu & Güvenlik Denetimi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --header-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --accent: #e1306c;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+    .logo-link:hover {
+      transform: scale(1.03);
+    }
+    .brand-title {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #f0f6fc;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .badge {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(225, 48, 108, 0.15);
+      color: #f472b6;
+      border: 1px solid rgba(225, 48, 108, 0.3);
+      font-weight: 600;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .lang {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      color: #c9d1d9;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .lang:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border-color: #f472b6;
+    }
+    .icon-link {
+      display: flex;
+      align-items: center;
+      color: #8b949e;
+      padding: 0.4rem;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .icon-link:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: #c9d1d9;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      border: none;
+      color: white;
+    }
+    .btn-primary:hover {
+      opacity: 0.95;
+    }
+    .btn-security {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+    }
+    .btn-security:hover {
+      background: rgba(34, 197, 94, 0.2);
+      color: #86efac;
+      border-color: rgba(34, 197, 94, 0.5);
+    }
+    main {
+      flex: 1;
+      overflow-x: auto;
+      padding: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    /* Security Verification Banner */
+    .security-banner {
+      background: #161b22;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem 1.25rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .security-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .security-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+    }
+    .shield-icon {
+      display: flex;
+      align-items: center;
+    }
+    .vt-link {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .vt-link:hover {
+      background: rgba(34, 197, 94, 0.25);
+      border-color: rgba(34, 197, 94, 0.5);
+      color: #86efac;
+    }
+    .hash-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: #8b949e;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .hash-badge:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(225, 48, 108, 0.4);
+      color: #fff;
+    }
+    .hash-badge code {
+      font-family: var(--font-mono);
+      color: #e6edf3;
+    }
+
+    .code-container {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    pre {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      line-height: 1.6;
+      padding: 1.25rem 1.5rem;
+      color: #e6edf3;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+    }
+
+    /* Security Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-card {
+      background: #161b22;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      max-width: 540px;
+      width: 100%;
+      padding: 1.75rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      transform: translateY(10px);
+      transition: transform 0.25s ease;
+    }
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.85rem;
+    }
+    .modal-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #f0f6fc;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: #8b949e;
+      cursor: pointer;
+      font-size: 1.25rem;
+      padding: 4px;
+      border-radius: 4px;
+    }
+    .modal-close:hover { color: #fff; }
+    .audit-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+    .audit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+    }
+    .audit-icon {
+      color: #4ade80;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .audit-text h4 {
+      font-size: 0.9rem;
+      color: #f0f6fc;
+      margin-bottom: 2px;
+    }
+    .audit-text p {
+      font-size: 0.8rem;
+      color: #8b949e;
+      line-height: 1.4;
+    }
+    .hash-box {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.25rem;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .hash-box:hover {
+      border-color: #38bdf8;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
+    }
+    .hash-box-label {
+      font-size: 0.75rem;
+      color: #8b949e;
+      margin-bottom: 4px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+    }
+    .hash-box-value {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #38bdf8;
+      word-break: break-all;
+    }
+    .hash-copied-toast {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #22c55e;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+      pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      animation: hash-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10;
+    }
+    @keyframes hash-pop {
+      from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-group">
+      <a href="index.html" class="logo-link" title="Ana Sayfaya Dön">
+        <img src="assets/logo-light.png" alt="yasweep" style="height: 36px; width: auto; display: block;">
+      </a>
+      <div class="brand-title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        yasweep.js
+      </div>
+      <span class="badge" data-i18n="sourceBadge">Açık Kaynak Kodu</span>
+    </div>
+    <div class="actions">
+      <button id="copyBtn" class="btn btn-primary" onclick="copySourceCode()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <span data-i18n="copyCode">Kodu Kopyala</span>
+      </button>
+      <a href="src/instagram-saved-remover.js" download="yasweep.js" class="btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <span data-i18n="downloadRaw">Ham İndir (.js)</span>
+      </a>
+      <a href="https://github.com/yaspeh" target="_blank" class="btn" aria-label="GitHub" title="GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      </a>
+      <span class="lang" id="langToggle" onclick="toggleLang()">TR</span>
+      <a href="index.html" class="btn" title="Ana Sayfaya Dön" data-i18n="goHome">Ana Sayfa</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="security-banner">
+      <div class="security-left">
+        <div class="security-status">
+          <span class="shield-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+          </span>
+          <strong data-i18n="secScanTitle">Güvenlik Taraması:</strong>
+          <a href="https://www.virustotal.com/gui/file/b03e498446beacc07332e44a04ea2b9808c7527a63cd8859810b4fcb4383ee6e" target="_blank" rel="noopener noreferrer" class="vt-link" title="VirusTotal Canlı Raporu İncele" data-i18n="vtBadgeText">
+            VirusTotal: 0 / 72 Tehdit (Raporu Gör ↗)
+          </a>
+        </div>
+        <div class="hash-badge" onclick="copyHash(this)" title="Tıklayıp SHA-256 İmzayı Kopyala">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>SHA-256: <code>b03e498446be...4383ee6e</code></span>
+        </div>
+      </div>
+      <button class="btn btn-security" onclick="toggleSecurityModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        <span data-i18n="secDetailsBtn">Güvenlik Detayları</span>
+      </button>
+    </div>
+
+    <div class="code-container">
+      <pre id="codeView"><code>/* Kod yükleniyor... */</code></pre>
+    </div>
+  </main>
+
+  <!-- Security Audit Modal -->
+  <div class="modal-overlay" id="securityModal" onclick="closeModalOnOverlay(event)">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span data-i18n="modalTitle">Güvenlik & Doğrulama Raporu</span>
+        </div>
+        <button class="modal-close" onclick="toggleSecurityModal()">✕</button>
+      </div>
+
+      <div class="hash-box" onclick="copyHash(this)" title="Tıklayıp SHA-256 İmzayı Kopyala">
+        <div class="hash-box-label">
+          <span data-i18n="hashLabel">SHA-256 KRİPTOGRAFİK DOSYA İMZASI</span>
+          <span style="color: #38bdf8; font-weight: 500;" data-i18n="clickToCopy">(Tıkla ve Kopyala)</span>
+        </div>
+        <div class="hash-box-value">b03e498446beacc07332e44a04ea2b9808c7527a63cd8859810b4fcb4383ee6e</div>
+      </div>
+
+      <div class="audit-grid">
+        <div class="audit-item">
+          <span class="audit-icon">✓</span>
+          <div class="audit-text">
+            <h4 data-i18n="audit1Title">VirusTotal Taraması: 0 / 72 Temiz</h4>
+            <p data-i18n="audit1Body">Kod dosyası VirusTotal üzerinde taranmış ve 72 güvenlik motorunda %100 temiz çıktığı onaylanmıştır.</p>
+          </div>
+        </div>
+        <div class="audit-item">
+          <span class="audit-icon">✓</span>
+          <div class="audit-text">
+            <h4 data-i18n="audit2Title">%100 İstemci Taraflı (Client-Side Only)</h4>
+            <p data-i18n="audit2Body">İstekler yalnızca sizin tarayıcınızdan doğrudan instagram.com sunucularına iletilir. Harici sunucuya veri aktarılmaz.</p>
+          </div>
+        </div>
+        <div class="audit-item">
+          <span class="audit-icon">✓</span>
+          <div class="audit-text">
+            <h4 data-i18n="audit3Title">Sıfır Şifre & Çerez İstemi</h4>
+            <p data-i18n="audit3Body">Sistem hiçbir zaman kullanıcı adı, şifre veya oturum bilgisi talep etmez, kendi açık oturumunuzu kullanır.</p>
+          </div>
+        </div>
+        <div class="audit-item">
+          <span class="audit-icon">✓</span>
+          <div class="audit-text">
+            <h4 data-i18n="audit4Title">Açık Kaynak Kod Şeffaflığı</h4>
+            <p data-i18n="audit4Body">Kod içerisinde gizlenmiş (obfuscated) hiçbir parça bulunmaz. Her satırı doğrudan inceleyebilirsiniz.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <a href="https://www.virustotal.com/gui/file/b03e498446beacc07332e44a04ea2b9808c7527a63cd8859810b4fcb4383ee6e" target="_blank" rel="noopener noreferrer" class="btn btn-security" style="flex: 1; justify-content: center; text-decoration: none;" data-i18n="vtBtn">
+          VirusTotal Raporunu Gör ↗
+        </a>
+        <button class="btn btn-primary" style="flex: 1; justify-content: center;" onclick="toggleSecurityModal()" data-i18n="closeBtn">
+          Kapat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let rawCode = '';
+    let currentLang = 'tr';
+    const FULL_HASH = "b03e498446beacc07332e44a04ea2b9808c7527a63cd8859810b4fcb4383ee6e";
+
+    const translations = {
+      tr: {
+        title: "yasweep.js — Kaynak Kodu & Güvenlik Denetimi",
+        sourceBadge: "Açık Kaynak Kodu",
+        copyCode: "Kodu Kopyala",
+        copied: "Kopyalandı!",
+        copiedHash: "Hash Kopyalandı!",
+        clickToCopy: "(Tıkla ve Kopyala)",
+        downloadRaw: "Ham İndir (.js)",
+        goHome: "Ana Sayfa",
+        secScanTitle: "Güvenlik Taraması:",
+        vtBadgeText: "VirusTotal: 0 / 72 Tehdit (Raporu Gör ↗)",
+        secDetailsBtn: "Güvenlik Detayları",
+        modalTitle: "Güvenlik & Doğrulama Raporu",
+        hashLabel: "SHA-256 KRİPTOGRAFİK DOSYA İMZASI",
+        audit1Title: "VirusTotal Taraması: 0 / 72 Temiz",
+        audit1Body: "Kod dosyası VirusTotal üzerinde taranmış ve 72 güvenlik motorunda %100 temiz çıktığı onaylanmıştır.",
+        audit2Title: "%100 İstemci Taraflı (Client-Side Only)",
+        audit2Body: "İstekler yalnızca sizin tarayıcınızdan doğrudan instagram.com sunucularına iletilir. Harici sunucuya veri aktarılmaz.",
+        audit3Title: "Sıfır Şifre & Çerez İstemi",
+        audit3Body: "Sistem hiçbir zaman kullanıcı adı, şifre veya oturum bilgisi talep etmez, kendi açık oturumunuzu kullanır.",
+        audit4Title: "Açık Kaynak Kod Şeffaflığı",
+        audit4Body: "Kod içerisinde gizlenmiş (obfuscated) hiçbir parça bulunmaz. Her satırı doğrudan inceleyebilirsiniz.",
+        vtBtn: "VirusTotal Raporunu Gör ↗",
+        closeBtn: "Kapat"
+      },
+      en: {
+        title: "yasweep.js — Source Code & Security Audit",
+        sourceBadge: "Open Source Code",
+        copyCode: "Copy Code",
+        copied: "Copied!",
+        copiedHash: "Hash Copied!",
+        clickToCopy: "(Click to Copy)",
+        downloadRaw: "Download Raw (.js)",
+        goHome: "Home Page",
+        secScanTitle: "Security Scan:",
+        vtBadgeText: "VirusTotal: 0 / 72 Threats (View Report ↗)",
+        secDetailsBtn: "Audit Details",
+        modalTitle: "Security & Audit Report",
+        hashLabel: "SHA-256 CRYPTOGRAPHIC FILE HASH",
+        audit1Title: "VirusTotal Scan: 0 / 72 Clean",
+        audit1Body: "Code file has been scanned on VirusTotal and verified 100% clean across all 72 security engines.",
+        audit2Title: "100% Client-Side Execution",
+        audit2Body: "Requests are made exclusively from your browser directly to instagram.com. No external servers involved.",
+        audit3Title: "Zero Password & Cookie Requests",
+        audit3Body: "The tool never requests your username, password, or session cookies.",
+        audit4Title: "Full Open Source Transparency",
+        audit4Body: "No obfuscated or hidden code blocks. Every line can be directly inspected.",
+        vtBtn: "View VirusTotal Report ↗",
+        closeBtn: "Close"
+      }
+    };
+
+    function applyTranslations() {
+      const dict = translations[currentLang];
+      document.title = dict.title;
+      document.getElementById('langToggle').textContent = currentLang.toUpperCase();
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+    }
+
+    function toggleLang() {
+      currentLang = currentLang === 'tr' ? 'en' : 'tr';
+      applyTranslations();
+    }
+
+    async function loadCode() {
+      try {
+        const res = await fetch('src/instagram-saved-remover.js?t=' + Date.now());
+        if (res.ok) {
+          rawCode = await res.text();
+          document.getElementById('codeView').textContent = rawCode;
+        } else {
+          document.getElementById('codeView').textContent = '/* Kod yüklenemedi. */';
+        }
+      } catch (e) {
+        document.getElementById('codeView').textContent = '/* Hata oluştu: ' + e.message + ' */';
+      }
+    }
+
+    async function copySourceCode() {
+      if (!rawCode) return;
+      try {
+        await navigator.clipboard.writeText(rawCode);
+        const btn = document.getElementById('copyBtn').querySelector('span');
+        const origText = btn.textContent;
+        btn.textContent = translations[currentLang].copied;
+        setTimeout(() => {
+          btn.textContent = origText;
+        }, 2000);
+      } catch (e) {}
+    }
+
+    async function copyHash(el) {
+      try {
+        await navigator.clipboard.writeText(FULL_HASH);
+        showToastOn(el, translations[currentLang].copiedHash || "Hash Kopyalandı!");
+      } catch (e) {}
+    }
+
+    function showToastOn(el, text) {
+      el.querySelector('.hash-copied-toast')?.remove();
+      const toast = document.createElement('div');
+      toast.className = 'hash-copied-toast';
+      toast.textContent = text;
+      el.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+
+    function toggleSecurityModal() {
+      const modal = document.getElementById('securityModal');
+      modal.classList.toggle('active');
+    }
+
+    function closeModalOnOverlay(e) {
+      if (e.target.id === 'securityModal') {
+        toggleSecurityModal();
+      }
+    }
+
+    loadCode();
+  </script>
+</body>
+</html>

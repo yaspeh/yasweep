@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>yasweep — Instagram Saved Remover</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css?v=5">
+  <link rel="stylesheet" href="assets/home.css?v=5">
+</head>
+<body style="background-color: #F0EFF5 !important;">
+
+  <header class="top">
+    <a href="index.html" class="brand" title="yasweep Ana Sayfa">
+      <img src="assets/logo.png?v=3" alt="yasweep" style="height: 38px; width: auto; display: block;">
+    </a>
+    <nav class="nav-links">
+      <a href="https://github.com/yaspeh" target="_blank" class="icon-link" aria-label="GitHub">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      </a>
+      <span class="lang" id="langToggle">TR</span>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1 data-i18n="headline">yasweep<br>Instagram Kaydedilenleri Sil</h1>
+      <p class="lead" data-i18n="lead">Instagram'da kaydettiğiniz tüm gönderileri tarayıp toplu olarak kaldırmanızı, istediğiniz gönderiyi arayıp bulmanızı sağlayan konsol aracı. Tarayıcınızın geliştirici konsoluna yapıştırarak kullanabilirsiniz.</p>
+      
+      <div class="actions">
+        <button id="copyBtn" class="btn btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span data-i18n="copyCode">Kodu kopyala</span>
+        </button>
+        <a href="code.html" target="_blank" class="btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span data-i18n="openCode">Kod dosyasını aç</span>
+        </a>
+      </div>
+
+      <div id="statusText" class="status-text"></div>
+
+      <div class="terminal-wrapper">
+        <div class="terminal-header">
+          <div class="terminal-left">
+            <div class="terminal-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="terminal-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              <span>yasweep.js</span>
+            </div>
+          </div>
+          <button id="expandCodeBtn" class="terminal-expand-btn">
+            <span id="expandBtnText" data-i18n="expandCode">Kodu Genişlet</span>
+            <svg id="expandBtnIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="terminal-body-container" id="terminalContainer">
+          <pre class="terminal-body" id="codePreview"><code>/* KOD YÜKLENİYOR... */</code></pre>
+          <div class="terminal-fade-overlay" id="fadeOverlay"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="usage-section">
+      <h2 class="section-title" data-i18n="usageTitle">Nasıl kullanılır</h2>
+      <p class="step-body" style="margin-bottom: 2rem;" data-i18n="usageBody">Tarayıcıda açtığınız Instagram sekmesinde DevTools konsolunu (Sağ tık &gt; İncele &gt; Console) açın ve yukarıdaki kodu yapıştırın.</p>
+      
+      <div class="steps-list">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3 class="step-title" data-i18n="step1Title">Instagram'a giriş yapın</h3>
+            <p class="step-body" data-i18n="step1Body">Önce instagram.com üzerinde hesabınızla giriş yapın.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3 class="step-title" data-i18n="step2Title">Konsolu açın</h3>
+            <p class="step-body" id="step2Body" data-i18n="step2Body">Windows/Linux: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> &middot; macOS: <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>I</kbd> veya sayfada <b>Sağ tık &gt; İncele &gt; Console</b></p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3 class="step-title" data-i18n="step3Title">Kodu yapıştırın</h3>
+            <p class="step-body" data-i18n="step3Body">Kodu kopyala butonuna basın, konsola yapıştırın. Chrome engellerse önce <span class="badge-copy-container"><span class="badge-copy" onclick="copyAllowPasting(this)">allow pasting</span><span class="badge-tooltip" id="pastingTooltip">Kopyalandı!</span></span> yazın.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3 class="step-title" data-i18n="step4Title">Taramayı başlatın</h3>
+            <p class="step-body" data-i18n="step4Body">Panel açılınca taramayı başlatın. Kaydedilen gönderilerinizi seçip toplu olarak kaldırabilirsiniz.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout" data-i18n="note">
+        Instagram rate-limit uygulayabilir. Silme hızını gereksiz yere arttırmayın.
+      </div>
+    </section>
+
+    <section class="security-section">
+      <h2 class="section-title" data-i18n="securityTitle">Güvenlik</h2>
+      <p class="step-body" style="margin-bottom: 1.25rem;" data-i18n="securityBody">Kod tamamen açık kaynaklıdır. Kendiniz inceleyebilirsiniz.</p>
+      
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+        <a href="https://www.virustotal.com/gui/file/b03e498446beacc07332e44a04ea2b9808c7527a63cd8859810b4fcb4383ee6e" target="_blank" rel="noopener noreferrer" title="VirusTotal Canlı Raporu İncele" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 5px 14px; border-radius: 999px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.2s ease;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+          VirusTotal: 0 / 72 Tehdit (Raporu Gör ↗)
+        </a>
+        <span id="hashBadgeIndex" onclick="copyHashIndex(this)" title="Tıklayıp SHA-256 İmzayı Kopyalayın" style="font-size: 0.85rem; font-family: var(--font-mono); color: #475569; background: #ffffff; border: 1px solid var(--border-color); padding: 5px 14px; border-radius: 999px; font-weight: 600; transition: all 0.2s ease; cursor: pointer; position: relative; user-select: none;">
+          SHA-256: b03e4984...4383ee6e
+        </span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div data-i18n="copyright">&copy; 2026 <a href="https://yasinpehlivan.com" target="_blank" style="text-decoration: underline; font-weight: 600;">yasweep</a></div>
+    <div>
+      <a href="https://github.com/yaspeh" target="_blank">GitHub</a>
+    </div>
+  </footer>
+
+  <script>
+    const translations = {
+      tr: {
+        headline: "yasweep<br>Instagram Kaydedilenleri Sil",
+        lead: "Instagram'da kaydettiğiniz tüm gönderileri tarayıp toplu olarak kaldırmanızı, istediğiniz gönderiyi arayıp bulmanızı sağlayan konsol aracı. Tarayıcınızın geliştirici konsoluna yapıştırarak kullanabilirsiniz.",
+        copyCode: "Kodu kopyala",
+        openCode: "Kod dosyasını aç",
+        usageTitle: "Nasıl kullanılır",
+        usageBody: "Tarayıcıda açtığınız Instagram sekmesinde DevTools konsolunu (Sağ tık &gt; İncele &gt; Console) açın ve yukarıdaki kodu yapıştırın.",
+        step1Title: "Instagram'a giriş yapın",
+        step1Body: "Önce instagram.com üzerinde hesabınızla giriş yapın.",
+        step2Title: "Konsolu açın",
+        step2Body: "Windows/Linux: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> &middot; macOS: <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>I</kbd> veya sayfada <b>Sağ tık &gt; İncele &gt; Console</b>",
+        step3Title: "Kodu yapıştırın",
+        step3Body: "Kodu kopyala butonuna basın, konsola yapıştırın. Chrome engellerse önce <span class=\"badge-copy-container\"><span class=\"badge-copy\" onclick=\"copyAllowPasting(this)\">allow pasting</span><span class=\"badge-tooltip\" id=\"pastingTooltip\">Kopyalandı!</span></span> yazın.",
+        step4Title: "Taramayı başlatın",
+        step4Body: "Panel açılınca taramayı başlatın. Kaydedilen gönderilerinizi seçip toplu olarak kaldırabilirsiniz.",
+        note: "Instagram rate-limit uygulayabilir. Silme hızını gereksiz yere arttırmayın.",
+        securityTitle: "Güvenlik",
+        securityBody: "Kod tamamen açık kaynaklıdır. Kendiniz inceleyebilirsiniz.",
+        copied: "Kod kopyalandı. Instagram konsoluna yapıştırabilirsiniz.",
+        copiedAllowPasting: "Kopyalandı!",
+        copyFailed: "Kopyalama başarısız oldu.",
+        copyright: "&copy; 2026 <a href=\"https://yasinpehlivan.com\" target=\"_blank\" style=\"text-decoration: underline; font-weight: 600;\">yasweep</a>",
+        expandCode: "Kodu Genişlet",
+        collapseCode: "Daralt"
+      },
+      en: {
+        headline: "yasweep<br>Instagram Saved Remover",
+        lead: "A console tool that scans all your saved posts on Instagram, lets you find specific posts, and bulk-remove them. Paste it into your browser's developer console to use.",
+        copyCode: "Copy code",
+        openCode: "Open code file",
+        usageTitle: "How to use",
+        usageBody: "Open the Instagram tab in your browser, open DevTools (Right click &gt; Inspect &gt; Console), and paste the snippet above into the console.",
+        step1Title: "Sign in to Instagram",
+        step1Body: "First, sign in to your account on instagram.com.",
+        step2Title: "Open the console",
+        step2Body: "Windows/Linux: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> &middot; macOS: <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>I</kbd> or on the page <b>Right click &gt; Inspect &gt; Console</b>",
+        step3Title: "Paste the code",
+        step3Body: "Click Copy code, paste into the console. If Chrome blocks paste, type <span class=\"badge-copy-container\"><span class=\"badge-copy\" onclick=\"copyAllowPasting(this)\">allow pasting</span><span class=\"badge-tooltip\" id=\"pastingTooltip\">Copied!</span></span> first.",
+        step4Title: "Start scanning",
+        step4Body: "When the panel opens, start the scan. Select saved posts and bulk-remove them safely.",
+        note: "Instagram may rate-limit you. Don't speed up the removal timing unnecessarily.",
+        securityTitle: "Security",
+        securityBody: "The code is fully open source. You can review it yourself.",
+        copied: "Code copied. Paste it into the Instagram console.",
+        copiedAllowPasting: "Copied!",
+        copyFailed: "Copy failed.",
+        copyright: "&copy; 2026 <a href=\"https://yasinpehlivan.com\" target=\"_blank\" style=\"text-decoration: underline; font-weight: 600;\">yasweep</a>",
+        expandCode: "Expand Code",
+        collapseCode: "Collapse"
+      }
+    };
+
+    let currentLang = 'tr';
+    let scriptContent = '';
+
+    // Load formatted code for preview display, load one-line code for clipboard copy
+    async function loadScript() {
+      try {
+        const t = Date.now();
+        const [oneLineRes, formattedRes] = await Promise.all([
+          fetch('dist/instagram-saved-remover.one-line.js?t=' + t),
+          fetch('src/instagram-saved-remover.js?t=' + t)
+        ]);
+        
+        if (oneLineRes.ok) {
+          scriptContent = await oneLineRes.text();
+        }
+        
+        if (formattedRes.ok) {
+          const formattedCode = await formattedRes.text();
+          document.getElementById('codePreview').querySelector('code').textContent = formattedCode;
+        } else if (scriptContent) {
+          document.getElementById('codePreview').querySelector('code').textContent = scriptContent;
+        }
+      } catch (e) {
+        console.error("Failed to load script preview:", e);
+      }
+    }
+    loadScript();
+
+    // Toggle Language
+    document.getElementById('langToggle').addEventListener('click', (e) => {
+      currentLang = currentLang === 'tr' ? 'en' : 'tr';
+      e.target.textContent = currentLang.toUpperCase();
+      document.documentElement.lang = currentLang;
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+          el.innerHTML = translations[currentLang][key];
+        }
+      });
+      
+      updateExpandButtonUI();
+    });
+
+    // Expand/Collapse Code
+    const container = document.getElementById('terminalContainer');
+    const expandBtn = document.getElementById('expandCodeBtn');
+    const expandBtnText = document.getElementById('expandBtnText');
+    const expandBtnIcon = document.getElementById('expandBtnIcon');
+    const fadeOverlay = document.getElementById('fadeOverlay');
+
+    function updateExpandButtonUI() {
+      const isExpanded = container.classList.contains('expanded');
+      expandBtnText.textContent = isExpanded ? translations[currentLang].collapseCode : translations[currentLang].expandCode;
+      expandBtnIcon.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+
+    expandBtn.addEventListener('click', () => {
+      container.classList.toggle('expanded');
+      fadeOverlay.classList.toggle('hidden');
+      updateExpandButtonUI();
+    });
+
+    // Copy allow pasting helper with floating tooltip
+    let tooltipTimeout;
+    async function copyAllowPasting(el) {
+      const tooltip = document.getElementById('pastingTooltip');
+      try {
+        await navigator.clipboard.writeText('allow pasting');
+        if (tooltip) {
+          tooltip.textContent = translations[currentLang].copiedAllowPasting || (currentLang === 'tr' ? 'Kopyalandı!' : 'Copied!');
+          tooltip.classList.add('show');
+          clearTimeout(tooltipTimeout);
+          tooltipTimeout = setTimeout(() => {
+            tooltip.classList.remove('show');
+          }, 2500);
+        }
+      } catch (err) {
+        console.error("Copy failed", err);
+      }
+    }
+
+    // Copy to clipboard
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      const statusText = document.getElementById('statusText');
+      try {
+        await navigator.clipboard.writeText(scriptContent);
+        statusText.textContent = translations[currentLang].copied;
+        statusText.className = 'status-text show';
+      } catch (err) {
+        statusText.textContent = translations[currentLang].copyFailed;
+        statusText.className = 'status-text show error';
+      }
+      setTimeout(() => {
+        statusText.className = 'status-text';
+      }, 3000);
+    });
+
+    async function copyHashIndex(el) {
+      const hash = "b03e498446beacc07332e44a04ea2b9808c7527a63cd8859810b4fcb4383ee6e";
+      try {
+        await navigator.clipboard.writeText(hash);
+        const origText = el.textContent;
+        el.textContent = currentLang === 'tr' ? 'Hash Kopyalandı! ✓' : 'Hash Copied! ✓';
+        el.style.color = '#15803d';
+        setTimeout(() => {
+          el.textContent = origText;
+          el.style.color = '#475569';
+        }, 2000);
+      } catch (e) {}
+    }
+  </script>
+</body>
+</html>
