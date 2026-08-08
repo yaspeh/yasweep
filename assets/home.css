@@ -39,8 +39,8 @@
 
 .status-text {
   font-size: 0.875rem;
-  min-height: 1.5rem;
-  margin-bottom: 2rem;
+  min-height: 0;
+  margin-bottom: 0.35rem;
   color: #e1306c;
   font-weight: 600;
   opacity: 0;
@@ -49,6 +49,8 @@
 
 .status-text.show {
   opacity: 1;
+  min-height: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .status-text.error {
@@ -60,7 +62,7 @@
   background: #0d1117;
   border: 1px solid #30363d;
   border-radius: 14px;
-  margin: 2.5rem auto 4.5rem;
+  margin: 1.25rem auto 2.25rem;
   max-width: 920px;
   box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
   text-align: left;
@@ -387,9 +389,9 @@
     padding: 0.85rem 1.25rem;
     font-size: 0.95rem;
   }
-  .terminal-container {
+  .terminal-wrapper, .terminal-container {
     border-radius: 12px;
-    margin-bottom: 2.25rem;
+    margin: 1rem auto 1.75rem;
   }
   .terminal-header {
     padding: 0.65rem 0.85rem;
