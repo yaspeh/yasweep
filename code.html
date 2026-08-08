@@ -417,25 +417,41 @@
       .actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.4rem;
+        gap: 0.5rem;
         width: 100%;
-        justify-content: flex-start;
       }
-      .actions .btn {
-        flex: 1 1 calc(50% - 0.4rem);
-        min-width: 110px;
+      /* Row 1: Kodu Kopyala & Ham İndir */
+      .actions #copyBtn,
+      .actions a[download] {
+        flex: 1 1 calc(50% - 0.25rem);
+        min-width: 120px;
         justify-content: center;
-        padding: 0.45rem 0.5rem;
-        font-size: 0.78rem;
+        padding: 0.5rem 0.6rem;
+        font-size: 0.88rem;
       }
-      .actions .btn svg {
-        width: 13px;
-        height: 13px;
+      /* Row 2: GitHub, TR, Ana Sayfa equal row */
+      .actions a[href*="github"],
+      .actions .lang,
+      .actions a[href="index.html"] {
+        flex: 1 1 calc(33.333% - 0.35rem);
+        min-width: 0;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0.45rem 0.3rem;
+        font-size: 0.82rem;
+        box-sizing: border-box;
+        display: inline-flex;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border);
+        color: #c9d1d9;
+        height: 36px;
+        margin: 0;
       }
-      .actions .lang {
-        flex: 0 0 auto;
-        padding: 0.4rem 0.75rem;
-        font-size: 0.78rem;
+      .actions a[href*="github"] svg {
+        width: 16px;
+        height: 16px;
       }
       main {
         padding: 1rem 0.75rem;
