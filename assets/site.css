@@ -173,11 +173,25 @@ footer {
 
 @media (max-width: 768px) {
   .top {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .brand img {
+    height: 32px !important;
+  }
+  .nav-links {
+    gap: 0.85rem;
+  }
+  .lang {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
   }
   footer {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+    margin-top: 2.5rem;
+    padding: 1.5rem 0;
   }
 }
