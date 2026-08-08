@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yasweep.yasinpehlivan.com/sitemap.xml
