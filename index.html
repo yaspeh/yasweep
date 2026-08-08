@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>yasweep — Instagram Saved Remover</title>
+  
+  <!-- Primary & Open Graph Meta Tags -->
+  <meta name="title" content="yasweep — Instagram Kaydedilenleri Sil & Yönet">
+  <meta name="description" content="Instagram'da kaydettiğiniz tüm gönderileri tarayıp toplu olarak kaldırmanızı sağlayan ücretsiz, açık kaynaklı ve güvenli konsol aracı.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yasweep.yasinpehlivan.com/">
+  <meta property="og:title" content="yasweep — Instagram Kaydedilenleri Sil & Yönet">
+  <meta property="og:description" content="Instagram'da kaydettiğiniz tüm gönderileri tarayıp toplu olarak kaldırmanızı sağlayan ücretsiz, açık kaynaklı ve güvenli konsol aracı.">
+  <meta property="og:image" content="https://yasweep.yasinpehlivan.com/assets/logo.png">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yasweep.yasinpehlivan.com/">
+  <meta property="twitter:title" content="yasweep — Instagram Kaydedilenleri Sil & Yönet">
+  <meta property="twitter:description" content="Instagram'da kaydettiğiniz tüm gönderileri tarayıp toplu olarak kaldırmanızı sağlayan ücretsiz, açık kaynaklı ve güvenli konsol aracı.">
+  <meta property="twitter:image" content="https://yasweep.yasinpehlivan.com/assets/logo.png">
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/site.css?v=5">
   <link rel="stylesheet" href="assets/home.css?v=5">
@@ -122,6 +137,51 @@
         </span>
       </div>
     </section>
+
+    <section class="faq-section">
+      <h2 class="faq-title" data-i18n="faqTitle">Sıkça Sorulan Sorular</h2>
+      <div class="faq-list">
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span data-i18n="faq1Q">Instagram hesabım engellenir veya kapanır mı?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="faq-answer" data-i18n="faq1A">
+            Hayır. yasweep bot veya harici bir sunucu kullanmaz. Tüm işlemler tıpkı elinizle gönderi kaydedip kaldırıyormuşsunuz gibi tarayıcınızın kendi açık oturumu üzerinden, insan hızında ve güvenli bekleme aralıklarıyla gerçekleştirilir.
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span data-i18n="faq2Q">Kullanıcı adı veya şifre vermem gerekiyor mu?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="faq-answer" data-i18n="faq2A">
+            Kesinlikle hayır! Sistem sizden asla şifre, kullanıcı adı veya çerez (cookie) talep etmez. Kod sadece tarayıcıda zaten açık olan Instagram sekmeniz içinde çalışır.
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span data-i18n="faq3Q">Chrome konsoluna kod yapıştırırken gelen uyarı nedir?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="faq-answer" data-i18n="faq3A">
+            Chrome ve modern tarayıcılar, kullanıcıları korumak adına konsola ilk kez kod yapıştırıldığında bir güvenlik uyarısı verir. Konsola "allow pasting" yazıp Enter'a basarak bu uyarıyı geçebilir, ardından yasweep kodunu yapıştırabilirsiniz.
+          </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span data-i18n="faq4Q">Kod tamamen güvenli mi, nasıl emin olabilirim?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="faq-answer" data-i18n="faq4A">
+            yasweep %100 açık kaynaklıdır. Kodların her satırını "code.html" sayfamızdan inceleyebilir ve VirusTotal üzerindeki 0/72 temiz güvenlik raporumuzu doğrulayabilirsiniz.
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -156,7 +216,16 @@
         copyFailed: "Kopyalama başarısız oldu.",
         copyright: "&copy; 2026 <a href=\"https://yasinpehlivan.com\" target=\"_blank\" style=\"text-decoration: underline; font-weight: 600;\">yasweep</a>",
         expandCode: "Kodu Genişlet",
-        collapseCode: "Daralt"
+        collapseCode: "Daralt",
+        faqTitle: "Sıkça Sorulan Sorular",
+        faq1Q: "Instagram hesabım engellenir veya kapanır mı?",
+        faq1A: "Hayır. yasweep bot veya harici bir sunucu kullanmaz. Tüm işlemler tıpkı elinizle gönderi kaydedip kaldırıyormuşsunuz gibi tarayıcınızın kendi açık oturumu üzerinden, insan hızında ve güvenli bekleme aralıklarıyla gerçekleştirilir.",
+        faq2Q: "Kullanıcı adı veya şifre vermem gerekiyor mu?",
+        faq2A: "Kesinlikle hayır! Sistem sizden asla şifre, kullanıcı adı veya çerez (cookie) talep etmez. Kod sadece tarayıcıda zaten açık olan Instagram sekmeniz içinde çalışır.",
+        faq3Q: "Chrome konsoluna kod yapıştırırken gelen uyarı nedir?",
+        faq3A: "Chrome ve modern tarayıcılar, kullanıcıları korumak adına konsola ilk kez kod yapıştırıldığında bir güvenlik uyarısı verir. Konsola \"allow pasting\" yazıp Enter'a basarak bu uyarıyı geçebilir, ardından yasweep kodunu yapıştırabilirsiniz.",
+        faq4Q: "Kod tamamen güvenli mi, nasıl emin olabilirim?",
+        faq4A: "yasweep %100 açık kaynaklıdır. Kodların her satırını \"code.html\" sayfamızdan inceleyebilir ve VirusTotal üzerindeki 0/72 temiz güvenlik raporumuzu doğrulayabilirsiniz."
       },
       en: {
         headline: "yasweep<br>Instagram Saved Remover",
@@ -181,9 +250,22 @@
         copyFailed: "Copy failed.",
         copyright: "&copy; 2026 <a href=\"https://yasinpehlivan.com\" target=\"_blank\" style=\"text-decoration: underline; font-weight: 600;\">yasweep</a>",
         expandCode: "Expand Code",
-        collapseCode: "Collapse"
+        collapseCode: "Collapse",
+        faqTitle: "Frequently Asked Questions",
+        faq1Q: "Will my Instagram account be banned or restricted?",
+        faq1A: "No. yasweep does not use bots or external servers. All requests are performed directly from your browser's active session at safe, human-like intervals.",
+        faq2Q: "Do I need to provide my username or password?",
+        faq2A: "Absolutely not! The tool never asks for your credentials or cookies. It runs directly inside your active Instagram tab.",
+        faq3Q: "What is the warning when pasting code into Chrome console?",
+        faq3A: "Modern browsers show a safety warning the first time code is pasted into DevTools. You can safely bypass it by typing \"allow pasting\" and hitting Enter, then paste the snippet.",
+        faq4Q: "Is the code 100% safe, how can I be sure?",
+        faq4A: "yasweep is 100% open source. You can inspect every line on our \"code.html\" page and verify our VirusTotal 0/72 clean security audit report."
       }
     };
+
+    function toggleFaq(el) {
+      el.classList.toggle('active');
+    }
 
     let currentLang = 'tr';
     let scriptContent = '';
